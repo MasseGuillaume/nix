@@ -85,6 +85,13 @@
     };
   };
 
+  environment = {
+    systemPackages = with pkgs; [ 
+      sublime3
+      home-manager
+    ];
+  };
+
   users.users.gui = {
     isNormalUser = true;
     home = "/home/gui";
