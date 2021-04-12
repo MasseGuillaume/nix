@@ -8,7 +8,6 @@ in
 {
   # environment = {
   #   variables = {
-  #     PATH="$PATH:$HOME/.npm-global";
   #     SBT_OPTS="-Xms512M -Xmx2G -Xss1M -XX:+CMSClassUnloadingEnabled";
   #   };
   # };
@@ -40,6 +39,7 @@ in
     xclip
     yarn
     zoom-us
+    wl-clipboard
   ];
 
   programs = {
@@ -153,22 +153,24 @@ in
 
         # DVI-D-0 | HDMI-A-0 | DisplayPort-0
         output = {
+          "*" = {
+            transform = "90";
+            background = "#000000 solid_color";
+          };
           "DVI-D-1" = {
             pos = "0 0";
-            transform = "90";
+            
           };
           "HDMI-A-1" = {
             pos = "1080 0";
-            transform = "90";
           };
           "DP-1" = {
             pos = "2160 0";
-            transform = "90";
           };
         };
         input = {
           "type:keyboard" = {
-            repeat_delay = "250";
+            repeat_delay = "150";
             repeat_rate = "50";
           };
         };
@@ -195,7 +197,7 @@ in
       telepresence = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/networking/telepresence {
         pythonPackages = pkgs.python3Packages;
       };
-      sbt = pkgs.sbt.override { 
+      sbt = pkgs.sbt.override {
         jre = pkgs.graalvm11-ce; 
       };
       # sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
