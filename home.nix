@@ -9,7 +9,6 @@ in
   # environment = {
   #   variables = {
   #     PATH="$PATH:$HOME/.npm-global";
-  #     EDITOR="${pkgs.sublime3}/bin/sublime3 -w -n";
   #     SBT_OPTS="-Xms512M -Xmx2G -Xss1M -XX:+CMSClassUnloadingEnabled";
   #   };
   # };
