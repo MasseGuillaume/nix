@@ -6,13 +6,13 @@ let
   '';
 in
 {
-  environment = {
-    variables = {
-      PATH="$PATH:$HOME/.npm-global";
-      EDITOR="${pkgs.sublime3}/bin/sublime3 -w -n";
-      SBT_OPTS="-Xms512M -Xmx2G -Xss1M -XX:+CMSClassUnloadingEnabled";
-    };
-  };
+  # environment = {
+  #   variables = {
+  #     PATH="$PATH:$HOME/.npm-global";
+  #     EDITOR="${pkgs.sublime3}/bin/sublime3 -w -n";
+  #     SBT_OPTS="-Xms512M -Xmx2G -Xss1M -XX:+CMSClassUnloadingEnabled";
+  #   };
+  # };
 
   home.packages = with pkgs; [
     ammonite
@@ -61,12 +61,12 @@ in
     chromium = {
       enable = true;
       extensions = [
-        # { id = "kbfnbcaeplbcioakkpcpgfkobkghlhen"; } # Grammarly for Chrome
-        # { id = "hdokiejnpimakedhajhdlcegeplioahd"; } # LastPass
-        # { id = "fmkadmapgofadopljbjfkapdkoienihi"; } # React Developer Tools
-        # { id = "lmhkpmbekcpmknklioeibfkpmmfibljd"; } # Redux DevTools
-        # { id = "clngdbkpkpeebahjckkjfobafhncgmne"; } # Stylus
-        # { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # uBlock Origin
+        "kbfnbcaeplbcioakkpcpgfkobkghlhen" # Grammarly for Chrome
+        "hdokiejnpimakedhajhdlcegeplioahd" # LastPass
+        "fmkadmapgofadopljbjfkapdkoienihi" # React Developer Tools
+        "lmhkpmbekcpmknklioeibfkpmmfibljd" # Redux DevTools
+        "clngdbkpkpeebahjckkjfobafhncgmne" # Stylus
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
       ];
     };
 
