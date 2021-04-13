@@ -87,7 +87,7 @@
 
   environment = {
     systemPackages = with pkgs; [ 
-      sublime3
+      wl-clipboard
       home-manager
     ];
   };

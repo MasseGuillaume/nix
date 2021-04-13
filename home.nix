@@ -4,6 +4,12 @@ let
   screenshot = pkgs.writeShellScript "screenshot.sh" ''
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy
   '';
+  sublime4 = 
+    let
+      recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
+      sublime4Packages = recurseIntoAttrs (pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/sublime/4/packages.nix { });
+    in
+      sublime4Packages.sublime4-dev;
 in
 {
   # environment = {
@@ -31,12 +37,12 @@ in
     postgresql
     pulumi
     sbt
-    sublime3
     telepresence
     tig
     vscode
+    sublime4
     wget
-    xclip
+    # xclip
     yarn
     zoom-us
     wl-clipboard
@@ -87,6 +93,7 @@ in
         window.border = 0;
         modifier = "Mod1";
         bars = [];
+        modes = {};
         keybindings =
           let
             mod = "Mod1";
@@ -97,17 +104,20 @@ in
               "${mod}+d" = "exec dmenu_run";
 
               "${mod}+h" = "focus left";
-              "${mod}+Shift+h" = "move left";
               "${mod}+s" = "focus right";
-              "${mod}+Shift+s" = "move right";
-
-
               "${mod}+n" = "focus down";
-              "${mod}+Shift+n" = "move down";
               "${mod}+t" = "focus up";
+              
+              "${mod}+Shift+h" = "move left";
+              "${mod}+Shift+s" = "move right";
+              "${mod}+Shift+n" = "move down";
               "${mod}+Shift+t" = "move up";
 
-              
+              "${mod}+Shift+g" = "resize shrink width 25 px";
+              "${mod}+Shift+c" = "resize grow height 25 px";
+              "${mod}+Shift+r" = "resize shrink height 25 px";
+              "${mod}+Shift+l" = "resize grow width 25 px";
+
               "${mod}+b" = "splith";
               "${mod}+v" = "splitv";
               "${mod}+f" = "fullscreen toggle";
@@ -143,12 +153,12 @@ in
               "${mod}+Shift+minus" = "move scratchpad";
               "${mod}+minus" = "scratchpad show";
 
-              "${mod}+Shift+c" = "reload";
-              "${mod}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
+              "${mod}+Shift+u" = "reload";
+              "${mod}+Shift+e" = "exec swaynag -t warning -m 'Kill Saw?' -b 'Yes' 'swaymsg exit'";
 
               "${mod}+r" = "mode resize";
 
-              "${mod}+Shift+g" = "exec ${screenshot}";
+              "${mod}+F1" = "exec ${screenshot}";
             };
 
         # DVI-D-0 | HDMI-A-0 | DisplayPort-0
@@ -170,7 +180,7 @@ in
         };
         input = {
           "type:keyboard" = {
-            repeat_delay = "150";
+            repeat_delay = "200";
             repeat_rate = "50";
           };
         };
@@ -197,18 +207,12 @@ in
       telepresence = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/networking/telepresence {
         pythonPackages = pkgs.python3Packages;
       };
-      sbt = pkgs.sbt.override {
-        jre = pkgs.graalvm11-ce; 
-      };
-      # sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
+      # sbt = pkgs.sbt.override {
       #   jre = pkgs.graalvm11-ce; 
       # };
-      sublime3 = 
-        let
-          recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
-          sublime3Packages = recurseIntoAttrs (pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/sublime/3/packages.nix { });
-        in
-          sublime3Packages.sublime3;
+      sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
+        jre = pkgs.graalvm11-ce; 
+      };
     };
   };
 }
