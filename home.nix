@@ -12,12 +12,6 @@ let
       sublime4Packages.sublime4-dev;
 in
 {
-  # environment = {
-  #   variables = {
-  #     SBT_OPTS="-Xms512M -Xmx2G -Xss1M -XX:+CMSClassUnloadingEnabled";
-  #   };
-  # };
-
   home.packages = with pkgs; [
     ammonite
     gnome3.gnome-screenshot
@@ -42,7 +36,6 @@ in
     vscode
     sublime4
     wget
-    # xclip
     yarn
     zoom-us
     wl-clipboard
@@ -53,9 +46,8 @@ in
     jq.enable = true;
     htop.enable = true;
 
-    kitty = {
+    alacritty = {
       enable = true;
-      settings.term = "xterm-256color";
     };
 
     password-store = {
@@ -101,13 +93,14 @@ in
           bars = [];
           modes = {};
           keybindings = {
-            "${mod}+Return"  = "exec kitty";
-            "${mod}+k"       = "kill";
-            "${mod}+d"       = "exec dmenu_run";
-            "${mod}+f"       = "fullscreen toggle";
-            "${mod}+Shift+q" = "exec swaynag -t warning -m 'Kill Saw?' -b 'Yes' 'swaymsg exit'";
-            "${mod}+F1"      = "exec ${screenshot}";
-            "${mod}+space"   = "floating toggle";
+            "${mod}+Return"        = "exec alacritty";
+            "${mod}+Shift+Return"  = "exec alacritty";
+            "${mod}+k"             = "kill";
+            "${mod}+d"             = "exec dmenu_run";
+            "${mod}+f"             = "fullscreen toggle";
+            "${mod}+Shift+q"       = "exec swaynag -t warning -m 'Kill Saw?' -b 'Yes' 'swaymsg exit'";
+            "${mod}+F1"            = "exec ${screenshot}";
+            "${mod}+space"         = "floating toggle";
 
 
             "${mod}+h" = "focus left";
@@ -173,16 +166,11 @@ in
     };
   };
 
-  
-  
   news.display = "silent";
 
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs : rec {
-      # chromedriver = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/selenium/chromedriver {
-      #   gconf = pkgs.gnome2.GConf;
-      # }; 
       pulumi = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/admin/pulumi/default.nix { };
       vscode = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/vscode/vscode.nix { };
       postgresql = pkgs.postgresql_12;
@@ -191,10 +179,7 @@ in
       };
       telepresence = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/networking/telepresence {
         pythonPackages = pkgs.python3Packages;
-      };
-      # sbt = pkgs.sbt.override {
-      #   jre = pkgs.graalvm11-ce; 
-      # };
+      };      
       sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
         jre = pkgs.graalvm11-ce; 
       };
