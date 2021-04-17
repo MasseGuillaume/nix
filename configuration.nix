@@ -8,6 +8,8 @@
     ];
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelParams = [ "intel_pstate=active" ];
     blacklistedKernelModules = [ "nouveau" ];
     loader = {
       systemd-boot.enable = true;
