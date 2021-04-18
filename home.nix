@@ -99,9 +99,11 @@ in
             "${mod}+d"             = "exec dmenu_run";
             "${mod}+f"             = "fullscreen toggle";
             "${mod}+Shift+q"       = "exec swaynag -t warning -m 'Kill Saw?' -b 'Yes' 'swaymsg exit'";
-            "${mod}+F1"            = "exec ${screenshot}";
             "${mod}+space"         = "floating toggle";
-
+            "${mod}+F1"            = "input type:keyboard xkb_layout us";
+            "${mod}+F2"            = "input type:keyboard xkb_layout ca";
+            "${mod}+F3"            = "input type:keyboard xkb_layout ir";
+            "${mod}+F5"            = "exec ${screenshot}";
 
             "${mod}+h" = "focus left";
             "${mod}+s" = "focus right";
@@ -125,7 +127,10 @@ in
             "${mod}+Shift+o" = "move container to output ${leftOutput}";
             "${mod}+Shift+e" = "move container to output ${centerOutput}";
             "${mod}+Shift+u" = "move container to output ${rightOutput}";
-            
+
+            "${mod}+m"       = "exec swaymsg -- output - transform 0";
+            "${mod}+Shift+m" = "exec swaymsg -- output - transform 90";
+
             "${mod}+1" = "workspace number 1";
             "${mod}+2" = "workspace number 2";
             "${mod}+3" = "workspace number 3";
