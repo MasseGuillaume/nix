@@ -128,8 +128,8 @@ in
             "${mod}+Shift+e" = "move container to output ${centerOutput}";
             "${mod}+Shift+u" = "move container to output ${rightOutput}";
 
-            "${mod}+m"       = "exec swaymsg -- output - transform 0";
-            "${mod}+Shift+m" = "exec swaymsg -- output - transform 90";
+            "${mod}+m"       = "output ${leftOutput} transform 0";
+            "${mod}+Shift+m" = "output ${leftOutput} transform 90";
 
             "${mod}+1" = "workspace number 1";
             "${mod}+2" = "workspace number 2";
