@@ -64,9 +64,9 @@
           ${pkgs.xlibs.xset}/bin/xset r rate 200 50
           ${pkgs.hsetroot}/bin/hsetroot -solid '#002b36'
           #   DVI-D-0     |  HDMI-A-0   |    DisplayPort-0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0        --rotate right --pos    0x0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0       --rotate right --pos 1080x0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0  --rotate right --pos 2160x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0        --rotate right  --pos    0x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0       --rotate right  --pos 1080x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0  --rotate normal --pos 2160x0
           
           xrdb "${pkgs.writeText  "xrdb.conf" ''
               URxvt.font:                 xft:Dejavu Sans Mono for Powerline:size=11
@@ -159,7 +159,11 @@
     cpu.intel.updateMicrocode = true;
   };
 
-  virtualisation.libvirtd.enable = true;
+  # virtualisation.libvirtd.enable = true;
+
+  virtualisation.docker = {
+    enable = true;
+  };
 
   fonts = {
     enableFontDir = true;
@@ -191,6 +195,9 @@
   programs = {
     zsh = {
       enable = true;
+      shellAliases = {
+        "cls" = "printf \"\\033c\"";
+      };
       ohMyZsh = {
         enable = true;
         theme = "agnoster";
@@ -200,7 +207,8 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [ 
+    systemPackages = with pkgs; [
+      php
       wl-clipboard
       home-manager
     ];

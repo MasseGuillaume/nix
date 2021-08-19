@@ -44,6 +44,7 @@ in
     vscode.enable = true;
     jq.enable = true;
     htop.enable = true;
+    go.enable = true;
 
     chromium = {
       enable = true;
@@ -85,6 +86,7 @@ in
       vscode = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/vscode/vscode.nix { };
       zoom-us = (pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/networking/instant-messengers/zoom-us {
         util-linux = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/os-specific/linux/util-linux {};
+        alsa-lib = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/os-specific/linux/alsa-project/alsa-lib { };
       }).overrideAttrs (old: {
       postFixup = old.postFixup + ''
         wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
