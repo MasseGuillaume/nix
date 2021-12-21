@@ -14,6 +14,7 @@ in
 {
   home.packages = with pkgs; [
     ammonite
+    bs-platform
     gnome3.gnome-screenshot
     google-cloud-sdk
     # home-manager
@@ -70,7 +71,6 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs : rec {
-      
       pulumi = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/admin/pulumi/default.nix { };
       postgresql = pkgs.postgresql_12;
       yarn = pkgs.yarn.override { 
@@ -82,7 +82,7 @@ in
       sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
         jre = pkgs.graalvm11-ce; 
       };
-      
+
       vscode = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/vscode/vscode.nix { };
       zoom-us = (pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/networking/instant-messengers/zoom-us {
         util-linux = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/os-specific/linux/util-linux {};

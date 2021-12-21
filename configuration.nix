@@ -8,8 +8,8 @@
     ];
 
   boot = {
-    # extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
-    # kernelModules = [ "v4l2loopback" ];
+    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    kernelModules = [ "v4l2loopback" ];
     # kernelPackages = pkgs.linuxPackages_latest;
 
     # kernelParams = [ "intel_pstate=active" ];
@@ -25,7 +25,7 @@
 
   networking = {
     hostName = "bob";
-    # nameservers = [ "8.8.8.8" ];
+    nameservers = [ "1.1.1.1" ];
   };
 
   time.timeZone = "America/Montreal";
@@ -63,10 +63,16 @@
           ${pkgs.xlibs.xsetroot}/bin/xsetroot -cursor_name left_ptr
           ${pkgs.xlibs.xset}/bin/xset r rate 200 50
           ${pkgs.hsetroot}/bin/hsetroot -solid '#002b36'
-          #   DVI-D-0     |  HDMI-A-0   |    DisplayPort-0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0        --rotate right  --pos    0x0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0       --rotate right  --pos 1080x0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0  --rotate normal --pos 2160x0
+
+
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0      --rotate right --pos    0x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0           --rotate right --pos 1080x0
+          
+
+          # #   DVI-D-0     |  HDMI-A-0   |    DisplayPort-0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0        --rotate right  --pos    0x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0       --rotate right  --pos 1080x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0  --rotate right --pos 2160x0
           
           xrdb "${pkgs.writeText  "xrdb.conf" ''
               URxvt.font:                 xft:Dejavu Sans Mono for Powerline:size=11
@@ -193,6 +199,7 @@
   };
 
   programs = {
+    steam.enable = true;
     zsh = {
       enable = true;
       shellAliases = {
@@ -208,9 +215,12 @@
 
   environment = {
     systemPackages = with pkgs; [
-      php
+      
       wl-clipboard
       home-manager
+
+      freenect
+      # kinect-audio-setup
     ];
   };
 
