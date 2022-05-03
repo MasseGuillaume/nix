@@ -31,6 +31,7 @@
   time.timeZone = "America/Montreal";
 
   services = {
+    # gvfs.enable = true;
     bloop = {
       install = true;
     };
@@ -59,20 +60,25 @@
         };
           
         sessionCommands = ''
-          ${pkgs.xlibs.xrdb}/bin/xrdb -all ~/.Xresources
           ${pkgs.xlibs.xsetroot}/bin/xsetroot -cursor_name left_ptr
-          ${pkgs.xlibs.xset}/bin/xset r rate 200 50
+          ${pkgs.xlibs.xset}/bin/xset r rate 200 60
           ${pkgs.hsetroot}/bin/hsetroot -solid '#002b36'
 
 
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0      --rotate right --pos    0x0
-          ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0           --rotate right --pos 1080x0
+          # DisplayPort-1   |  DisplayPort-0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-1 --rotate right --pos    0x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0 --rotate right --pos 1080x0
+
+
+          # # DisplayPort-0   |  HDMI-A-0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0 --rotate right --pos    0x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0      --rotate right --pos 1080x0
           
 
           # #   DVI-D-0     |  HDMI-A-0   |    DisplayPort-0
-          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0        --rotate right  --pos    0x0
-          # ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0       --rotate right  --pos 1080x0
-          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0  --rotate right --pos 2160x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DVI-D-0       --rotate right  --pos    0x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output HDMI-A-0      --rotate right  --pos 1080x0
+          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0 --rotate right --pos 2160x0
           
           xrdb "${pkgs.writeText  "xrdb.conf" ''
               URxvt.font:                 xft:Dejavu Sans Mono for Powerline:size=11
@@ -152,6 +158,8 @@
     };
   };
 
+
+  sound.enable = true;
   hardware = {
     opengl = {
       driSupport32Bit = true;
@@ -199,6 +207,11 @@
   };
 
   programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "curses";
+    };
     steam.enable = true;
     zsh = {
       enable = true;

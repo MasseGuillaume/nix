@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 let
   screenshot = pkgs.writeShellScript "screenshot.sh" ''
@@ -13,40 +13,47 @@ let
 in
 {
   home.packages = with pkgs; [
+    altair
     ammonite
     bs-platform
     gnome3.gnome-screenshot
     google-cloud-sdk
+    gopls
+    glib
+    grpcurl
+    clojure
+    discord
     # home-manager
     inotify-tools
     killall
     kubectl
+    leiningen
     libxml2
     loc
     mplayer
     ngrok
-    nodejs-12_x
+    nodejs-14_x
     nodePackages.typescript
     openjdk
     pavucontrol
     postgresql
-    pulumi
+    # pulumi
     sbt
     telepresence
     tig
-    vscode
+    # vscode
     sublime4
     wget
+    wine
     yarn
     zoom-us
   ];
 
   programs = {
-    vscode.enable = true;
+    # vscode.enable = true;
     jq.enable = true;
     htop.enable = true;
     go.enable = true;
-
     chromium = {
       enable = true;
       extensions = [
@@ -61,7 +68,7 @@ in
 
     git = {
       enable = true;
-      userEmail = "masgui@gmail.com";
+      userEmail = "masse.guillaume@narrative.io";
       userName = "Guillaume Massé";
 
       # extraConfig = {}
@@ -71,26 +78,45 @@ in
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs : rec {
-      pulumi = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/admin/pulumi/default.nix { };
-      postgresql = pkgs.postgresql_12;
+      callPackage2 = path: obj:
+        pkgs.callPackage ("/home/gui/foos/nixpkgs/pkgs/" + path) obj;
+
       yarn = pkgs.yarn.override { 
         nodejs = pkgs.nodejs-12_x;
       };
-      telepresence = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/tools/networking/telepresence {
-        pythonPackages = pkgs.python3Packages;
-      };      
-      sbt = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/development/tools/build-managers/sbt/default.nix {
-        jre = pkgs.graalvm11-ce; 
+      sbt = callPackage2 "development/tools/build-managers/sbt" {
+        # jre = graalvm17-ce;
+        jre = pkgs.graalvm11-ce;
       };
 
-      vscode = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/editors/vscode/vscode.nix { };
-      zoom-us = (pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/applications/networking/instant-messengers/zoom-us {
-        util-linux = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/os-specific/linux/util-linux {};
-        alsa-lib = pkgs.callPackage /home/gui/foos/nixpkgs/pkgs/os-specific/linux/alsa-project/alsa-lib { };
-      }).overrideAttrs (old: {
-      postFixup = old.postFixup + ''
-        wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
-      '';});
+      # pulumi = callPackage2 "tools/admin/pulumi" { };
+
+      # postgresql = pkgs.postgresql_12;
+      # telepresence = callPackage2 "tools/networking/telepresence" {
+      #   pythonPackages = pkgs.python3Packages;
+      # };
+      # graalvmCEPackages = pkgs.recurseIntoAttrs (
+      #   callPackage2 development/compilers/graalvm/community-edition {}
+      # );
+      # graalvm17-ce = graalvmCEPackages.graalvm17-ce;
+      # clojure = pkgs.clojure.override {
+      #   # jdk = graalvm17-ce;
+      #   jdk = pkgs.graalvm11-ce;
+      # };
+      # leiningen = pkgs.leiningen.override {
+      #   # jdk = graalvm17-ce;
+      #   jdk = pkgs.graalvm11-ce;
+      # };
+      # vscode = callPackage2 "applications/editors/vscode/vscode.nix" { };
+      # zoom-us = 
+      #   (callPackage2 "applications/networking/instant-messengers/zoom-us" {
+      #       # util-linux = callPackage2 "os-specific/linux/util-linux" {};
+      #       # alsa-lib = callPackage2 "os-specific/linux/alsa-project/alsa-lib" { };
+      #     }).overrideAttrs (old: {
+      #     postFixup = old.postFixup + ''
+      #       wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
+      #     '';
+      #   });
     };
   };
 }
