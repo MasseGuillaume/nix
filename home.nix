@@ -13,21 +13,25 @@ let
 in
 {
   home.packages = with pkgs; [
+    # bs-platform
+    # clojure
+    # glib
+    # google-cloud-sdk
+    # gopls
+    # grpcurl
+    # home-manager
+    # leiningen
+    # pulumi
+    # telepresence
+    # vscode
+    # wine
+    # zoom-us
     altair
     ammonite
-    bs-platform
     gnome3.gnome-screenshot
-    google-cloud-sdk
-    gopls
-    glib
-    grpcurl
-    clojure
-    discord
-    # home-manager
     inotify-tools
     killall
     kubectl
-    leiningen
     libxml2
     loc
     mplayer
@@ -37,16 +41,15 @@ in
     openjdk
     pavucontrol
     postgresql
-    # pulumi
     sbt
-    telepresence
-    tig
-    # vscode
     sublime4
+    tig
     wget
-    wine
     yarn
-    zoom-us
+
+    # narrative
+    docker-compose
+    flyway
   ];
 
   programs = {
