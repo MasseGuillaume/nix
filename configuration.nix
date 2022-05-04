@@ -66,8 +66,8 @@
 
 
           # DisplayPort-1   |  DisplayPort-0
-          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-1 --rotate right --pos    0x0
-          # ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0 --rotate right --pos 1080x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-1 --rotate right --pos    0x0
+          ${pkgs.xlibs.xrandr}/bin/xrandr --output DisplayPort-0 --rotate right --pos 1080x0
 
 
           # # DisplayPort-0   |  HDMI-A-0
