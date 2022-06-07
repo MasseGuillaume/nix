@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  screenshot = pkgs.writeShellScript "screenshot.sh" ''
-    ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy
-  '';
   recurseIntoAttrs = attrs: attrs // { recurseForDerivations = true; };
 
   foosNixpkgs = "/home/gui/foos/nixpkgs/pkgs/";
@@ -15,33 +12,50 @@ let
       sublime4Packages = recurseIntoAttrs (callPackage2 "/applications/editors/sublime/4/packages.nix" { });
     in
       sublime4Packages.sublime4-dev;
-in
-{
+in {
+
   home.packages = with pkgs; [
     ammonite
+    awscli
+    calibre
+    coursier
+    dmenu
+    docker-compose
+    flyway
+    gimp
     gnome3.gnome-screenshot
+    gnupg
+    graalvm11-ce
+    graphviz
     inotify-tools
+    jd-gui
+    kdiff3
     killall
     kubectl
+    kubectx
+    lastpass-cli
     libxml2
     loc
     mplayer
+    nodejs-16_x
     ngrok
-    nodejs-14_x
-    nodePackages.typescript
-    openjdk
     pavucontrol
-    postgresql
+    pgcli
     sbt
+    simplescreenrecorder
     sublime4
-    tig
-    wget
-    yarn
-
-    # narrative
-    docker-compose
-    flyway
     terraform
+    tig
+    tree
+    unzip
+    vscode
+    wget
+    wrangler
+    xclip
+    xvkbd
+    yarn
+    youtube-dl
+    yq
   ];
 
   programs = {
@@ -73,6 +87,9 @@ in
       yarn = pkgs.yarn.override { 
         nodejs = pkgs.nodejs-12_x;
       };
+
+      # vscode = callPackage2 "applications/editors/vscode/vscodium.nix" { };
+
       sbt = callPackage2 "development/tools/build-managers/sbt" {
         jre = pkgs.graalvm11-ce;
       };
